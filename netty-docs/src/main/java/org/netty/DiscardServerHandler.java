@@ -1,7 +1,5 @@
 package org.netty;
 
-import io.netty.buffer.ByteBuf;
-
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -14,11 +12,8 @@ public class DiscardServerHandler extends ChannelInboundHandlerAdapter { // (1)
   @Override
   public void channelRead(ChannelHandlerContext ctx, Object msg) { // (2)
     // ByteBuf is a reference-counted object which has to be released explicitly via the release() method.
-    ByteBuf in = (ByteBuf) msg;
-    while (in.isReadable()) { // (1)
-      System.out.print((char) in.readByte());
-      System.out.flush();
-    }
+    ctx.write(msg); // (1)
+    ctx.flush(); // (2)
   }
 
   // This method is called with a Throwable when an exception was raised by Netty due to an I/O error or by a handler implementation due to the exception thrown while processing events.
