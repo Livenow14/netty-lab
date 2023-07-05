@@ -8,6 +8,11 @@ import java.util.Date;
 public class TimeClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception { // handler 처음 등록 시 수행되는 메서드
+        super.handlerAdded(ctx);
+    }
+
+    @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) { // server와 달리 종종 IndexOutOfBoundsException이 발생한다. (추후 다룰 예정)
         ByteBuf m = (ByteBuf) msg;
         try {
